@@ -28,15 +28,20 @@ export default function AuthPage() {
         if (error) throw error;
         router.push("/checkout");
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback`,
-          },
         });
         if (error) throw error;
-        alert("Check your email for the confirmation link!");
+        
+        // If email confirmation is off, the user is logged in automatically.
+        if (data.session) {
+          router.push("/checkout");
+        } else {
+          // Fallback just in case they leave it on
+          alert("Account created! (If you didn't receive an email, tell Basel to turn off Email Confirmation)");
+          setIsLogin(true);
+        }
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
