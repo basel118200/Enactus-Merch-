@@ -8,12 +8,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { User } from "@supabase/supabase-js";
 
 export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCartStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<any>(null); // Keeping as any for now
+  const [user, setUser] = useState<User | null>(null);
   const [authChecked, setAuthChecked] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -72,8 +73,8 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) {
-      alert("Please upload your payment receipt.");
+    if (!file || !user) {
+      alert("Please upload your payment receipt and make sure you are logged in.");
       return;
     }
 

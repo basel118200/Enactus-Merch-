@@ -159,7 +159,7 @@ export default function AdminPage() {
 
                   <td className="px-6 py-8">
                     <div className="flex flex-wrap gap-2">
-                       {order.items.map((item: any, i: number) => (
+                       {order.items.map((item: AdminOrderItem, i: number) => (
                          <span key={i} className="text-[9px] bg-background border border-border px-2 py-1 rounded-md text-secondary uppercase font-bold tracking-tighter">
                            {item.name} x{item.quantity}
                          </span>

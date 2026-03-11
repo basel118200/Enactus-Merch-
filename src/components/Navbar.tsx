@@ -6,11 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, Menu, X, User } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { supabase } from "@/lib/supabase";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<any>(null); // Keeping as any for now
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const { openCart, items } = useCartStore(); // Adjusted to keep openCart and use 'items'
   const count = items.length; // Adjusted to calculate count from 'items' array
 
@@ -68,7 +69,7 @@ export default function Navbar() {
                 title="My Orders"
               >
                 <User size={18} />
-                <span className="max-w-[100px] truncate">{user.email.split('@')[0]}</span>
+                <span className="max-w-[100px] truncate">{user.email?.split('@')[0] || 'User'}</span>
               </Link>
             ) : (
               <Link

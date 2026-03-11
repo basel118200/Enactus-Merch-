@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { User } from "@supabase/supabase-js";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Package, Clock, CheckCircle, ExternalLink, CreditCard, LogOut, Upload, X } from "lucide-react";
@@ -24,7 +25,7 @@ interface Order {
 }
 
 export default function AccountPage() {
-  const [user, setUser] = useState<any>(null); // Keeping user as any for now as it's from Supabase
+  const [user, setUser] = useState<User | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [completingPayment, setCompletingPayment] = useState<Order | null>(null);
@@ -61,7 +62,7 @@ export default function AccountPage() {
 
   const handleCompletePayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file || !completingPayment) return;
+    if (!file || !completingPayment || !user) return;
 
     setUploading(true);
     try {
@@ -98,8 +99,8 @@ export default function AccountPage() {
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
       if (updatedOrders) setOrders(updatedOrders);
-    } catch (err: any) {
-      alert(err.message);
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : String(err));
     } finally {
       setUploading(false);
     }
@@ -176,7 +177,7 @@ export default function AccountPage() {
                     <div className="lg:w-2/4 border-y lg:border-y-0 lg:border-x border-border/50 py-4 lg:py-0 lg:px-8">
                       <p className="text-[10px] text-secondary uppercase tracking-widest mb-4">Items</p>
                       <div className="space-y-3">
-                        {order.items.map((item: any, i: number) => (
+                        {order.items.map((item: OrderItem, i: number) => (
                           <div key={i} className="flex justify-between items-center bg-background/50 p-3 rounded-xl border border-border/30">
                             <span className="text-xs font-bold text-white uppercase tracking-wider">{item.name} <span className="text-secondary lowercase">x{item.quantity}</span></span>
                             <span className="text-xs font-mono text-secondary">EGP {item.price * item.quantity}</span>
