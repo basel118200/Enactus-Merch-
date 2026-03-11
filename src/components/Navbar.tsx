@@ -18,7 +18,7 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 50); // Changed setScrolled to setIsScrolled
     window.addEventListener("scroll", onScroll);
-    
+
     // Auth Listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
@@ -38,9 +38,8 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? "py-4 bg-background/80 backdrop-blur-xl border-b border-white/5" : "py-8 bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "py-4 bg-background/80 backdrop-blur-xl border-b border-white/5" : "py-8 bg-transparent"
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           {/* Logo */}
@@ -61,7 +60,7 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            
+
             {user ? (
               <Link
                 href="/account"
@@ -114,7 +113,7 @@ export default function Navbar() {
                 </span>
               )}
             </button>
-            <button 
+            <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden text-white"
               aria-label="Toggle menu"
@@ -134,14 +133,14 @@ export default function Navbar() {
             exit={{ opacity: 0, x: "100%" }}
             className="fixed inset-0 z-40 bg-background md:hidden pt-32 px-6"
           >
-            <button 
+            <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="absolute top-8 right-6 text-white"
             >
               <X size={32} />
             </button>
             {[
-              ...navLinks, 
+              ...navLinks,
               { label: "Shop", href: "/shop" },
               user ? { label: "My Account", href: "/account" } : { label: "Login", href: "/auth" }
             ].map(

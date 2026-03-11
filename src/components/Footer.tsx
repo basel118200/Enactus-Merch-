@@ -19,7 +19,7 @@ export default function Footer() {
             </h2>
             <p className="mt-4 text-secondary text-sm leading-relaxed max-w-xs">
               A student-run organization building projects, brands, and
-              communities — one merch drop at a time.
+              communities, one merch drop at a time.
             </p>
           </div>
 

@@ -52,7 +52,7 @@ export default function HeroSection() {
             <span className="hero-line block text-white">OUR MERCH</span>
             <span className="hero-line block text-white">DESERVES</span>
             <span className="hero-line block text-primary">
-              A PRETTY WEBSITE.
+              A COOL WEBSITE.
             </span>
           </h1>
         </div>
