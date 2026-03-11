@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Instagram, Linkedin } from "lucide-react";
+import { Instagram, Facebook } from "lucide-react";
 import Marquee from "./Marquee";
 
 export default function Footer() {
@@ -53,7 +53,16 @@ export default function Footer() {
             </h3>
             <div className="flex gap-4">
               <a
-                href="https://instagram.com"
+                href="https://www.facebook.com/EnactusCairo?mibextid=LQQJ4d"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:text-primary-gold transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook size={22} />
+              </a>
+              <a
+                href="https://www.instagram.com/enactuscairouniversity?igsh=aXdsdzZ5ZWw5NzJ3"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:text-primary-gold transition-colors"
@@ -61,18 +70,9 @@ export default function Footer() {
               >
                 <Instagram size={22} />
               </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:text-primary-gold transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={22} />
-              </a>
               {/* TikTok (custom SVG since Lucide doesn't have it) */}
               <a
-                href="https://tiktok.com"
+                href="https://www.tiktok.com/@enactuscairo?_r=1&_t=ZS-94by5vTm7to"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-primary hover:text-primary-gold transition-colors"
