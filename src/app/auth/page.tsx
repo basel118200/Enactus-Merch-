@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { LogIn, UserPlus, Mail, Lock, ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Mail, Lock, ArrowRight } from "lucide-react";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -39,8 +38,12 @@ export default function AuthPage() {
         if (error) throw error;
         alert("Check your email for the confirmation link!");
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     } finally {
       setLoading(false);
     }
@@ -119,7 +122,7 @@ export default function AuthPage() {
             className="text-secondary hover:text-white text-xs uppercase tracking-widest transition-colors"
           >
             {isLogin ? (
-              <>Don't have an account? <span className="text-primary font-bold">Sign Up</span></>
+              <>Don&apos;t have an account? <span className="text-primary font-bold">Sign Up</span></>
             ) : (
               <>Already have an account? <span className="text-primary font-bold">Login</span></>
             )}

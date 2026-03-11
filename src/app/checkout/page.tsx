@@ -13,7 +13,7 @@ export default function CheckoutPage() {
   const { items, totalPrice, clearCart } = useCartStore();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(null); // Keeping as any for now
   const [authChecked, setAuthChecked] = useState(false);
   
   const [formData, setFormData] = useState({
@@ -84,7 +84,7 @@ export default function CheckoutPage() {
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `receipts/${user.id}/${fileName}`;
 
-      const { error: uploadError, data } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from('receipts')
         .upload(filePath, file);
 
@@ -112,9 +112,10 @@ export default function CheckoutPage() {
 
       clearCart();
       router.push("/order-confirmed");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      alert(error.message || "Error submitting order.");
+      const message = error instanceof Error ? error.message : "Error submitting order.";
+      alert(message);
     } finally {
       setLoading(false);
     }
@@ -307,7 +308,7 @@ export default function CheckoutPage() {
               {paymentType === "Deposit" && (
                 <div className="mt-8 p-4 bg-primary/5 border border-primary/20 rounded-xl">
                   <p className="text-[10px] text-primary/80 leading-relaxed uppercase tracking-widest text-center">
-                    You'll be able to pay the remaining 50% from your account dashboard later.
+                    You&apos;ll be able to pay the remaining 50% from your account dashboard later.
                   </p>
                 </div>
               )}

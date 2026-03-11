@@ -3,11 +3,29 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { motion } from "framer-motion";
-import { Package, Search, Filter, CheckCircle, ExternalLink, User, Phone, Briefcase, Trash2, ArrowRight } from "lucide-react";
-import Image from "next/image";
+import { Search, ExternalLink, User, Phone, Briefcase, Trash2 } from "lucide-react";
+
+interface AdminOrderItem {
+  name: string;
+  quantity: number;
+}
+
+interface AdminOrder {
+  id: string;
+  created_at: string;
+  customer_name: string;
+  customer_phone: string;
+  customer_team: string;
+  items: AdminOrderItem[];
+  total_amount: number;
+  payment_type: string;
+  payment_status: string;
+  receipt_url: string;
+  final_receipt_url?: string;
+}
 
 export default function AdminPage() {
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<AdminOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
@@ -24,7 +42,7 @@ export default function AdminPage() {
         setIsAdmin(true); 
       }
       
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("orders")
         .select("*")
         .order("created_at", { ascending: false });
@@ -59,6 +77,14 @@ export default function AdminPage() {
       <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
     </div>
   );
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-white uppercase tracking-widest text-xs">
+        Access Denied
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-20 px-6">

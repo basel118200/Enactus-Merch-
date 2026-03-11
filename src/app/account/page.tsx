@@ -5,14 +5,29 @@ import { supabase } from "@/lib/supabase";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { Package, Clock, CheckCircle, ExternalLink, CreditCard, LogOut, Upload, X } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
+interface OrderItem {
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+interface Order {
+  id: string;
+  created_at: string;
+  payment_status: string;
+  payment_type: string;
+  total_amount: number;
+  items: OrderItem[];
+  receipt_url?: string;
+}
+
 export default function AccountPage() {
-  const [user, setUser] = useState<any>(null);
-  const [orders, setOrders] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null); // Keeping user as any for now as it's from Supabase
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
-  const [completingPayment, setCompletingPayment] = useState<any>(null);
+  const [completingPayment, setCompletingPayment] = useState<Order | null>(null);
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const router = useRouter();
@@ -26,7 +41,7 @@ export default function AccountPage() {
       }
       setUser(user);
 
-      const { data: ordersData, error } = await supabase
+      const { data: ordersData } = await supabase
         .from("orders")
         .select("*")
         .eq("user_id", user.id)

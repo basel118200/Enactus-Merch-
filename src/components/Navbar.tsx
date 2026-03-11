@@ -8,14 +8,14 @@ import { useCartStore } from "@/store/cartStore";
 import { supabase } from "@/lib/supabase";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const { openCart, totalItems } = useCartStore();
-  const count = totalItems();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<any>(null); // Keeping as any for now
+  const { openCart, items } = useCartStore(); // Adjusted to keep openCart and use 'items'
+  const count = items.length; // Adjusted to calculate count from 'items' array
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setIsScrolled(window.scrollY > 50); // Changed setScrolled to setIsScrolled
     window.addEventListener("scroll", onScroll);
     
     // Auth Listener
@@ -37,10 +37,8 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${
-          scrolled
-            ? "py-3 bg-[#0a0a0a]/95 backdrop-blur-md border-b border-border"
-            : "py-5 bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled ? "py-4 bg-background/80 backdrop-blur-xl border-b border-white/5" : "py-8 bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -115,12 +113,12 @@ export default function Navbar() {
                 </span>
               )}
             </button>
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="text-white"
+            <button 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden text-white"
               aria-label="Toggle menu"
             >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
@@ -128,13 +126,19 @@ export default function Navbar() {
 
       {/* Mobile Overlay */}
       <AnimatePresence>
-        {mobileOpen && (
+        {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[99] bg-[#0a0a0a] flex flex-col items-center justify-center gap-8"
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
+            className="fixed inset-0 z-40 bg-background md:hidden pt-32 px-6"
           >
+            <button 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute top-8 right-6 text-white"
+            >
+              <X size={32} />
+            </button>
             {[
               ...navLinks, 
               { label: "Shop", href: "/shop" },
@@ -149,7 +153,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={link.href}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={() => setIsMobileMenuOpen(false)}
                     className="font-heading text-3xl font-bold uppercase tracking-wider text-white hover:text-primary transition-colors text-center"
                   >
                     {link.label}
