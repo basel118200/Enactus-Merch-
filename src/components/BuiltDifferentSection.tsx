@@ -24,8 +24,8 @@ export default function BuiltDifferentSection() {
         gsap.from(line, {
           y: 100,
           opacity: 0,
-          duration: 1,
-          ease: "power3.out",
+          duration: 0.4,
+          ease: "back.out(1.7)",
           scrollTrigger: {
             trigger: line,
             start: "top 85%",

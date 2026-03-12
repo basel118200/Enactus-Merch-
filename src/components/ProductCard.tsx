@@ -33,12 +33,12 @@ export default function ProductCard({ product }: { product: Product }) {
     >
       <Link href={`/shop/${product.slug}`}>
         <div
-          className="group relative cursor-pointer"
+          className="group relative cursor-pointer border-2 border-white brutalist-shadow-white p-2 bg-black hover:brutalist-shadow-hover transition-all duration-200"
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
           {/* Image */}
-          <div className="relative aspect-square overflow-hidden bg-card">
+          <div className="relative aspect-square overflow-hidden bg-black border-2 border-white">
             <Image
               src={product.images[0]}
               alt={product.name}
@@ -66,7 +66,7 @@ export default function ProductCard({ product }: { product: Product }) {
             >
               <button
                 onClick={handleQuickAdd}
-                className="px-6 py-3 border border-primary text-primary font-heading font-bold uppercase tracking-wider text-xs hover:bg-primary hover:text-black transition-all duration-300"
+                className="px-6 py-3 border-2 border-primary bg-black text-primary font-heading font-bold uppercase tracking-wider text-xs hover:bg-primary hover:text-black hover:border-black brutalist-shadow-sm transition-all duration-200"
               >
                 Add to Cart
               </button>

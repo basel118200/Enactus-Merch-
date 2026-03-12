@@ -27,7 +27,6 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   background: #333;
-  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #FACC15;
@@ -42,5 +41,18 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .brutalist-shadow {
+    box-shadow: 6px 6px 0px 0px rgba(250, 204, 21, 1);
+  }
+  .brutalist-shadow-sm {
+    box-shadow: 4px 4px 0px 0px rgba(250, 204, 21, 1);
+  }
+  .brutalist-shadow-white {
+    box-shadow: 6px 6px 0px 0px rgba(255, 255, 255, 1);
+  }
+  .brutalist-shadow-hover:hover {
+    box-shadow: 8px 8px 0px 0px rgba(250, 204, 21, 1);
+    transform: translate(-2px, -2px);
   }
 }

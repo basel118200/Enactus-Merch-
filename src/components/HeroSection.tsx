@@ -18,26 +18,26 @@ export default function HeroSection() {
       gsap.from(lines, {
         y: 80,
         opacity: 0,
-        duration: 0.9,
-        stagger: 0.15,
-        ease: "power3.out",
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "back.out(1.5)",
         delay: 3,
       });
 
       gsap.from(subRef.current, {
         y: 30,
         opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        delay: 3.5,
+        duration: 0.5,
+        ease: "back.out(1.5)",
+        delay: 3.3,
       });
 
       gsap.from(ctaRef.current, {
         y: 20,
         opacity: 0,
-        duration: 0.6,
-        ease: "power3.out",
-        delay: 3.8,
+        duration: 0.4,
+        ease: "back.out(2)",
+        delay: 3.5,
       });
     });
 
@@ -68,7 +68,7 @@ export default function HeroSection() {
         <div ref={ctaRef} className="mt-10">
           <Link
             href="/shop"
-            className="inline-block px-10 py-4 bg-primary text-black font-heading font-bold uppercase tracking-wider text-sm border-2 border-primary hover:bg-transparent hover:text-primary transition-all duration-300"
+            className="inline-block px-10 py-4 bg-primary text-black font-heading font-bold uppercase tracking-wider text-sm border-4 border-black brutalist-shadow hover:brutalist-shadow-hover hover:bg-white hover:border-black transition-all duration-200"
           >
             Shop Now
           </Link>

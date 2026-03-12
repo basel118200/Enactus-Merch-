@@ -60,9 +60,9 @@ export default function CartDrawer() {
                 items.map((item) => (
                   <div
                     key={`${item.slug}-${item.size}`}
-                    className="flex gap-4 p-4 bg-card rounded-lg"
+                    className="flex gap-4 p-4 bg-black border border-border"
                   >
-                    <div className="relative w-20 h-20 rounded overflow-hidden flex-shrink-0">
+                    <div className="relative w-20 h-20 overflow-hidden flex-shrink-0 border border-border">
                       <Image
                         src={item.image}
                         alt={item.name}
@@ -90,7 +90,7 @@ export default function CartDrawer() {
                               item.quantity - 1
                             )
                           }
-                          className="w-6 h-6 flex items-center justify-center border border-border rounded text-secondary hover:text-white hover:border-primary transition-colors"
+                          className="w-6 h-6 flex items-center justify-center border border-border text-secondary hover:text-white hover:border-white transition-colors"
                           aria-label="Decrease quantity"
                         >
                           <Minus size={12} />
@@ -106,7 +106,7 @@ export default function CartDrawer() {
                               item.quantity + 1
                             )
                           }
-                          className="w-6 h-6 flex items-center justify-center border border-border rounded text-secondary hover:text-white hover:border-primary transition-colors"
+                          className="w-6 h-6 flex items-center justify-center border border-border text-secondary hover:text-white hover:border-white transition-colors"
                           aria-label="Increase quantity"
                         >
                           <Plus size={12} />
@@ -139,7 +139,7 @@ export default function CartDrawer() {
                 <Link
                   href="/checkout"
                   onClick={closeCart}
-                  className="w-full py-4 bg-primary text-black font-heading font-bold uppercase tracking-wider text-center text-sm hover:bg-primary-gold transition-colors duration-300 rounded block"
+                  className="w-full py-4 bg-primary text-black font-heading font-bold uppercase tracking-wider text-center text-sm border-2 border-primary brutalist-shadow-sm hover:brutalist-shadow-hover hover:bg-white hover:border-white transition-all duration-200 block"
                 >
                   Proceed to Payment
                 </Link>

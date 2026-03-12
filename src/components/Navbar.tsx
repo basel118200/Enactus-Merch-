@@ -38,7 +38,7 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "py-4 bg-background/80 backdrop-blur-xl border-b border-white/5" : "py-8 bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "py-4 bg-background border-b-4 border-white" : "py-8 bg-transparent"
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -81,7 +81,7 @@ export default function Navbar() {
 
             <Link
               href="/shop"
-              className="px-5 py-2 bg-primary text-black text-sm font-semibold uppercase tracking-wider rounded-full hover:bg-transparent hover:text-primary border-2 border-primary transition-all duration-300"
+              className="px-6 py-2 bg-primary text-black text-sm font-bold uppercase tracking-wider border-2 border-primary brutalist-shadow-sm hover:brutalist-shadow-hover hover:bg-white hover:border-white transition-all duration-200"
             >
               Shop
             </Link>
@@ -92,7 +92,7 @@ export default function Navbar() {
             >
               <ShoppingBag size={20} />
               {count > 0 && (
-                <span className="absolute -top-2 -right-2 w-4 h-4 bg-primary text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 w-5 h-5 bg-primary text-black text-[10px] font-bold flex items-center justify-center border border-black">
                   {count}
                 </span>
               )}
@@ -108,7 +108,7 @@ export default function Navbar() {
             >
               <ShoppingBag size={20} />
               {count > 0 && (
-                <span className="absolute -top-2 -right-2 w-4 h-4 bg-primary text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 w-5 h-5 bg-primary text-black text-[10px] font-bold flex items-center justify-center border border-black">
                   {count}
                 </span>
               )}

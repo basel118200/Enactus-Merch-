@@ -26,6 +26,10 @@ export default function CheckoutPage() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
 
+  const [promoCodeInput, setPromoCodeInput] = useState("");
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const [promoError, setPromoError] = useState("");
+
   useEffect(() => {
     const checkUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
@@ -59,7 +63,22 @@ export default function CheckoutPage() {
   }
 
   const total = totalPrice();
-  const discountAmount = paymentType === "Deposit" ? total * 0.5 : total;
+  
+  // Apply 70 EGP discount if promo code ENACTUS2026 is used
+  const discountValue = discountApplied ? 70 : 0;
+  const discountedTotal = Math.max(0, total - discountValue);
+  
+  const discountAmount = paymentType === "Deposit" ? discountedTotal * 0.5 : discountedTotal;
+
+  const handleApplyPromo = () => {
+    if (promoCodeInput.trim().toUpperCase() === "ENACTUS2026") {
+      setDiscountApplied(true);
+      setPromoError("");
+    } else {
+      setDiscountApplied(false);
+      setPromoError("Invalid promo code");
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
@@ -103,7 +122,7 @@ export default function CheckoutPage() {
         customer_phone: formData.phone,
         customer_team: formData.team,
         items: items,
-        total_amount: total,
+        total_amount: discountedTotal,
         payment_type: paymentType,
         payment_status: 'Pending',
         receipt_url: publicUrl,
@@ -147,7 +166,7 @@ export default function CheckoutPage() {
                     <input
                       required
                       type="text"
-                      className="w-full bg-card border border-border p-4 text-white focus:border-primary outline-none transition-colors rounded-xl"
+                      className="w-full bg-black border-2 border-border p-4 text-white hover:border-white focus:border-primary outline-none transition-colors"
                       value={formData.name}
                       onChange={e => setFormData({...formData, name: e.target.value})}
                       placeholder="e.g. Basel Bahaa"
@@ -158,7 +177,7 @@ export default function CheckoutPage() {
                     <input
                       required
                       type="tel"
-                      className="w-full bg-card border border-border p-4 text-white focus:border-primary outline-none transition-colors rounded-xl"
+                      className="w-full bg-black border-2 border-border p-4 text-white hover:border-white focus:border-primary outline-none transition-colors"
                       value={formData.phone}
                       onChange={e => setFormData({...formData, phone: e.target.value})}
                       placeholder="012XXXXXXXX"
@@ -169,7 +188,7 @@ export default function CheckoutPage() {
                     <input
                       required
                       type="text"
-                      className="w-full bg-card border border-border p-4 text-white focus:border-primary outline-none transition-colors rounded-xl"
+                      className="w-full bg-black border-2 border-border p-4 text-white hover:border-white focus:border-primary outline-none transition-colors"
                       value={formData.team}
                       onChange={e => setFormData({...formData, team: e.target.value})}
                       placeholder="e.g. Multimedia / HR / Cairo Business"
@@ -184,35 +203,60 @@ export default function CheckoutPage() {
                     <button
                       type="button"
                       onClick={() => setPaymentType("Full")}
-                      className={`flex items-center gap-4 p-5 rounded-2xl border transition-all ${
-                        paymentType === "Full" ? "border-primary bg-primary/10" : "border-border bg-card/50 hover:border-secondary"
+                      className={`flex items-center gap-4 p-5 border-2 transition-all ${
+                        paymentType === "Full" ? "border-primary bg-primary brutalist-shadow text-black" : "border-border bg-black text-white hover:border-white hover:brutalist-shadow-white"
                       }`}
                     >
-                      <div className={`p-3 rounded-xl ${paymentType === "Full" ? "bg-primary text-black" : "bg-card text-secondary"}`}>
+                      <div className={`p-3 border-2 ${paymentType === "Full" ? "border-black bg-black text-primary" : "border-border bg-black text-secondary"}`}>
                         <CreditCard size={20} />
                       </div>
                       <div className="text-left">
-                        <p className="text-xs font-bold uppercase tracking-widest">Full Payment</p>
-                        <p className="text-[10px] text-secondary mt-1">Pay the total amount now</p>
+                        <p className={`text-xs font-bold uppercase tracking-widest ${paymentType === "Full" ? "text-black" : "text-white"}`}>Full Payment</p>
+                        <p className={`text-[10px] mt-1 ${paymentType === "Full" ? "text-black/70" : "text-secondary"}`}>Pay the total amount now</p>
                       </div>
                     </button>
 
                     <button
                       type="button"
                       onClick={() => setPaymentType("Deposit")}
-                      className={`flex items-center gap-4 p-5 rounded-2xl border transition-all ${
-                        paymentType === "Deposit" ? "border-primary bg-primary/10" : "border-border bg-card/50 hover:border-secondary"
+                      className={`flex items-center gap-4 p-5 border-2 transition-all ${
+                        paymentType === "Deposit" ? "border-primary bg-primary brutalist-shadow text-black" : "border-border bg-black text-white hover:border-white hover:brutalist-shadow-white"
                       }`}
                     >
-                      <div className={`p-3 rounded-xl ${paymentType === "Deposit" ? "bg-primary text-black" : "bg-card text-secondary"}`}>
+                      <div className={`p-3 border-2 ${paymentType === "Deposit" ? "border-black bg-black text-primary" : "border-border bg-black text-secondary"}`}>
                         <Wallet size={20} />
                       </div>
                       <div className="text-left">
-                        <p className="text-xs font-bold uppercase tracking-widest">Deposit (50%)</p>
-                        <p className="text-[10px] text-secondary mt-1">Pay half now, half later</p>
+                        <p className={`text-xs font-bold uppercase tracking-widest ${paymentType === "Deposit" ? "text-black" : "text-white"}`}>Deposit (50%)</p>
+                        <p className={`text-[10px] mt-1 ${paymentType === "Deposit" ? "text-black/70" : "text-secondary"}`}>Pay half now, half later</p>
                       </div>
                     </button>
                   </div>
+                </div>
+
+                {/* Promo Code Section */}
+                <div className="pb-8 border-b border-border">
+                  <h3 className="font-heading text-xs uppercase font-bold text-primary tracking-widest mb-6">Promo Code</h3>
+                  <div className="flex gap-3 max-w-md">
+                    <input
+                      type="text"
+                      value={promoCodeInput}
+                      onChange={(e) => setPromoCodeInput(e.target.value)}
+                      placeholder="Enter code"
+                      disabled={discountApplied}
+                      className="flex-1 bg-black border-2 border-border p-4 text-xs text-white uppercase tracking-widest outline-none focus:border-white transition-all disabled:opacity-50"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleApplyPromo}
+                      disabled={discountApplied || !promoCodeInput.trim()}
+                      className="px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-xs border-2 border-white brutalist-shadow-white hover:brutalist-shadow-hover transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {discountApplied ? "Applied" : "Apply"}
+                    </button>
+                  </div>
+                  {promoError && <p className="text-red-500 text-[10px] uppercase font-bold mt-3 tracking-widest">{promoError}</p>}
+                  {discountApplied && <p className="text-green-500 text-[10px] uppercase font-bold mt-3 tracking-widest">Promo code ENACTUS2026 applied! (-70 EGP)</p>}
                 </div>
 
                 {/* QR Instructions */}
@@ -222,9 +266,8 @@ export default function CheckoutPage() {
                      Please scan the QR code and transfer <span className="text-primary font-bold">EGP {discountAmount.toFixed(0)}</span> to the account below.
                    </p>
                    
-                   <div className="relative w-full max-w-xs aspect-square mx-auto mb-10 group">
-                     <div className="absolute inset-0 bg-primary/20 blur-2xl group-hover:bg-primary/30 transition-all rounded-full" />
-                     <div className="relative w-full h-full bg-white p-4 rounded-3xl overflow-hidden shadow-2xl">
+                   <div className="relative w-full max-w-xs aspect-square mx-auto mb-10 group mt-4">
+                     <div className="relative w-full h-full bg-white p-4 border-4 border-black brutalist-shadow-white overflow-hidden transition-transform group-hover:scale-[1.02]">
                        <Image 
                          src="/payment-qr.jpg" 
                          alt="Payment QR Code"
@@ -234,15 +277,15 @@ export default function CheckoutPage() {
                      </div>
                    </div>
 
-                   <div className="bg-card border border-border rounded-2xl p-6">
+                   <div className="bg-black border-2 border-border p-6">
                       <label className="block text-[10px] font-heading font-bold text-secondary uppercase tracking-[0.2em] mb-4 text-center">Upload Transfer Receipt</label>
                       <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" id="receipt-upload" />
                       <label
                         htmlFor="receipt-upload"
-                        className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-border rounded-xl cursor-pointer hover:border-primary hover:bg-primary/5 transition-all text-secondary hover:text-primary overflow-hidden"
+                        className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-border cursor-pointer hover:border-white hover:bg-white/5 transition-all text-secondary hover:text-white overflow-hidden"
                       >
                         {preview ? (
-                          <div className="relative w-full h-full p-2 bg-background">
+                          <div className="relative w-full h-full p-2 bg-black">
                             <Image src={preview} alt="Receipt preview" fill className="object-contain" />
                           </div>
                         ) : (
@@ -258,7 +301,7 @@ export default function CheckoutPage() {
                 <button
                   disabled={loading}
                   type="submit"
-                  className="w-full py-5 bg-primary text-black font-heading font-bold uppercase tracking-widest text-sm hover:scale-[1.02] active:scale-[0.98] transition-all rounded-2xl flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(250,204,21,0.2)]"
+                  className="w-full py-5 bg-primary text-black font-heading font-bold uppercase tracking-widest text-sm border-2 border-primary brutalist-shadow hover:brutalist-shadow-hover hover:bg-white hover:border-white transition-all flex items-center justify-center gap-3"
                 >
                   {loading ? "Processing Order..." : (
                     <>
@@ -272,12 +315,12 @@ export default function CheckoutPage() {
 
           {/* Cart Summary */}
           <div className="lg:col-span-5 h-fit lg:sticky lg:top-32">
-            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-card border border-border rounded-3xl p-8 shadow-xl">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-black border-4 border-white brutalist-shadow-white p-8">
                <h2 className="font-heading text-xl font-bold uppercase mb-10 tracking-tight">Your Order</h2>
                <div className="space-y-6 mb-10 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                 {items.map((item) => (
                   <div key={`${item.slug}-${item.size}`} className="flex gap-5 group">
-                    <div className="relative w-20 h-20 rounded-2xl overflow-hidden flex-shrink-0 bg-background border border-border group-hover:border-primary/50 transition-colors">
+                    <div className="relative w-20 h-20 overflow-hidden flex-shrink-0 bg-black border-2 border-white">
                       <Image src={item.image} alt={item.name} fill className="object-cover" />
                     </div>
                     <div className="flex-1 py-1">
@@ -289,15 +332,23 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              <div className="space-y-4 pt-8 border-t border-border">
+
+
+              <div className="space-y-4 pt-6 mt-4 border-t border-border">
                 <div className="flex justify-between items-center text-xs text-secondary uppercase tracking-widest">
                   <span>Subtotal</span>
                   <span className="font-mono">EGP {total}</span>
                 </div>
+                {discountApplied && (
+                  <div className="flex justify-between items-center text-xs text-green-500 uppercase tracking-widest font-bold">
+                    <span>Discount</span>
+                    <span className="font-mono">- EGP {discountValue.toFixed(0)}</span>
+                  </div>
+                )}
                 {paymentType === "Deposit" && (
                   <div className="flex justify-between items-center text-xs text-primary uppercase tracking-widest">
                     <span>Deposit Due (50%)</span>
-                    <span className="font-mono">- EGP {(total * 0.5).toFixed(0)}</span>
+                    <span className="font-mono">- EGP {(discountedTotal * 0.5).toFixed(0)}</span>
                   </div>
                 )}
                 <div className="flex justify-between items-center pt-4">
@@ -307,8 +358,8 @@ export default function CheckoutPage() {
               </div>
 
               {paymentType === "Deposit" && (
-                <div className="mt-8 p-4 bg-primary/5 border border-primary/20 rounded-xl">
-                  <p className="text-[10px] text-primary/80 leading-relaxed uppercase tracking-widest text-center">
+                <div className="mt-8 p-4 bg-black border-2 border-primary brutalist-shadow-sm">
+                  <p className="text-[10px] text-primary leading-relaxed uppercase tracking-widest text-center font-bold">
                     You&apos;ll be able to pay the remaining 50% from your account dashboard later.
                   </p>
                 </div>

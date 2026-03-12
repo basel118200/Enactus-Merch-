@@ -86,13 +86,10 @@ export default function WhatWeDoSection() {
           {departments.map(({ icon: Icon, name, desc }) => (
             <div
               key={name}
-              className="dept-card group relative bg-card rounded-xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(250,204,21,0.08)] cursor-default"
+              className="dept-card group relative bg-black p-8 border-2 border-[#fff] hover:border-primary brutalist-shadow-white hover:brutalist-shadow-hover transition-all duration-300 cursor-default"
             >
-              {/* Yellow accent top bar */}
-              <div className="absolute top-0 left-8 right-8 h-[2px] bg-primary rounded-b" />
-
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                <Icon size={24} className="text-primary" />
+              <div className="w-12 h-12 bg-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Icon size={24} className="text-black" />
               </div>
 
               <h3 className="font-heading text-lg font-bold uppercase tracking-wider text-white mb-2">

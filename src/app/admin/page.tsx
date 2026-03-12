@@ -103,13 +103,13 @@ export default function AdminPage() {
                 placeholder="Search Name / Phone" 
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="bg-card border border-border p-3 pl-12 text-xs text-white uppercase tracking-widest outline-none focus:border-primary rounded-xl w-64 transition-all"
+                className="bg-black border-2 border-border p-3 pl-12 text-xs text-white uppercase tracking-widest outline-none focus:border-primary w-64 transition-all hover:border-white"
               />
             </div>
             <select 
               value={filter}
               onChange={e => setFilter(e.target.value)}
-              className="bg-card border border-border p-3 text-xs text-white uppercase tracking-widest outline-none focus:border-primary rounded-xl transition-all cursor-pointer"
+              className="bg-black border-2 border-border p-3 text-xs text-white uppercase tracking-widest outline-none focus:border-primary transition-all cursor-pointer hover:border-white"
             >
               <option value="All">All Types</option>
               <option value="Full">Full Payment</option>
@@ -136,9 +136,9 @@ export default function AdminPage() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   key={order.id} 
-                  className="bg-card hover:bg-card/80 transition-all border border-border rounded-2xl group"
+                  className="bg-black transition-all border-2 border-white hover:brutalist-shadow-white group"
                 >
-                  <td className="px-6 py-8 rounded-l-2xl">
+                  <td className="px-6 py-8">
                     <p className="text-xs text-white font-mono">{new Date(order.created_at).toLocaleDateString()}</p>
                     <p className="text-[10px] text-secondary mt-1 uppercase">{order.payment_type}</p>
                   </td>
@@ -160,7 +160,7 @@ export default function AdminPage() {
                   <td className="px-6 py-8">
                     <div className="flex flex-wrap gap-2">
                        {order.items.map((item: AdminOrderItem, i: number) => (
-                         <span key={i} className="text-[9px] bg-background border border-border px-2 py-1 rounded-md text-secondary uppercase font-bold tracking-tighter">
+                         <span key={i} className="text-[9px] bg-black border-2 border-border px-2 py-1 text-secondary uppercase font-bold tracking-tighter">
                            {item.name} x{item.quantity}
                          </span>
                        ))}
@@ -179,7 +179,7 @@ export default function AdminPage() {
                       <a 
                         href={order.receipt_url} 
                         target="_blank" 
-                        className="p-2 bg-background border border-border rounded-lg text-secondary hover:text-primary transition-colors hover:border-primary"
+                        className="p-2 bg-black border-2 border-border text-secondary hover:text-white transition-colors hover:border-white"
                         title="Main Receipt"
                       >
                         <ExternalLink size={14} />
@@ -188,7 +188,7 @@ export default function AdminPage() {
                         <a 
                           href={order.final_receipt_url} 
                           target="_blank" 
-                          className="p-2 bg-primary/10 border border-primary/50 rounded-lg text-primary hover:bg-primary hover:text-black transition-all"
+                          className="p-2 bg-primary text-black border-2 border-primary hover:bg-white hover:border-white transition-all brutalist-shadow-sm"
                           title="Final Receipt"
                         >
                           <ExternalLink size={14} />
@@ -197,12 +197,12 @@ export default function AdminPage() {
                     </div>
                   </td>
 
-                  <td className="px-6 py-8 rounded-r-2xl text-right">
+                  <td className="px-6 py-8 text-right">
                     <div className="flex justify-end gap-2">
                       {order.payment_status === 'Pending' && (
                         <button 
                           onClick={() => updateStatus(order.id, 'Verified')}
-                          className="px-4 py-2 bg-green-500/10 text-green-500 text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-green-500 hover:text-white transition-all border border-green-500/20"
+                          className="px-4 py-2 bg-black text-green-500 text-[10px] font-bold uppercase tracking-widest hover:bg-green-500 hover:text-black transition-all border-2 border-green-500 brutalist-shadow-sm"
                         >
                           Verify
                         </button>
@@ -210,7 +210,7 @@ export default function AdminPage() {
                       {order.payment_status === 'Verification Pending' && (
                         <button 
                           onClick={() => updateStatus(order.id, 'Completed')}
-                          className="px-4 py-2 bg-primary text-black text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-primary/80 transition-all shadow-lg"
+                          className="px-4 py-2 bg-primary text-black text-[10px] font-bold uppercase tracking-widest hover:bg-white transition-all border-2 border-primary hover:border-white brutalist-shadow-sm"
                         >
                           Complete
                         </button>

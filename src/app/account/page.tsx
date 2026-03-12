@@ -134,9 +134,9 @@ export default function AccountPage() {
           </h2>
 
           {orders.length === 0 ? (
-            <div className="bg-card border border-border p-20 rounded-3xl text-center">
+            <div className="bg-black border-4 border-white p-20 text-center brutalist-shadow-white">
               <p className="text-secondary text-sm uppercase tracking-[0.2em] mb-8">No orders found yet</p>
-              <Link href="/shop" className="px-8 py-4 bg-primary text-black font-heading font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-primary/80 transition-all shadow-[0_0_30px_rgba(250,204,21,0.1)]">
+              <Link href="/shop" className="px-8 py-4 bg-primary text-black font-heading font-bold uppercase tracking-widest text-xs border-2 border-primary brutalist-shadow hover:brutalist-shadow-hover hover:bg-white hover:border-white transition-all duration-200 inline-block">
                 Start Shopping
               </Link>
             </div>
@@ -147,7 +147,7 @@ export default function AccountPage() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   key={order.id} 
-                  className="bg-card border border-border p-6 md:p-8 rounded-3xl group"
+                  className="bg-black border-2 border-white p-6 md:p-8 brutalist-shadow-white group"
                 >
                   <div className="flex flex-col lg:flex-row gap-8">
                     {/* Order Meta */}
@@ -158,10 +158,10 @@ export default function AccountPage() {
                       </div>
                       <div>
                         <p className="text-[10px] text-secondary uppercase tracking-widest mb-1">Status</p>
-                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${
+                        <div className={`inline-flex items-center gap-2 px-3 py-1 border text-[10px] font-bold uppercase tracking-widest ${
                           order.payment_status === 'Completed' || order.payment_status === 'Verified' 
-                            ? "bg-green-500/10 text-green-500" 
-                            : "bg-primary/10 text-primary"
+                            ? "bg-green-500/10 text-green-500 border-green-500" 
+                            : "bg-primary text-black border-black brutalist-shadow-sm"
                         }`}>
                           {order.payment_status === 'Verified' ? <CheckCircle size={10} /> : <Clock size={10} />}
                           {order.payment_status}
@@ -178,7 +178,7 @@ export default function AccountPage() {
                       <p className="text-[10px] text-secondary uppercase tracking-widest mb-4">Items</p>
                       <div className="space-y-3">
                         {order.items.map((item: OrderItem, i: number) => (
-                          <div key={i} className="flex justify-between items-center bg-background/50 p-3 rounded-xl border border-border/30">
+                          <div key={i} className="flex justify-between items-center bg-black p-3 border-2 border-border">
                             <span className="text-xs font-bold text-white uppercase tracking-wider">{item.name} <span className="text-secondary lowercase">x{item.quantity}</span></span>
                             <span className="text-xs font-mono text-secondary">EGP {item.price * item.quantity}</span>
                           </div>
@@ -197,7 +197,7 @@ export default function AccountPage() {
                         {order.payment_type === 'Deposit' && order.payment_status !== 'Completed' && (
                           <button 
                             onClick={() => setCompletingPayment(order)}
-                            className="bg-primary hover:bg-primary/90 text-black px-4 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all shadow-lg"
+                            className="bg-primary text-black px-4 py-3 text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 border-2 border-primary brutalist-shadow-sm hover:brutalist-shadow-hover hover:bg-white hover:border-white transition-all duration-200"
                           >
                             <CreditCard size={14} /> Complete Payment
                           </button>
@@ -206,7 +206,7 @@ export default function AccountPage() {
                           href={order.receipt_url} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="bg-card/50 border border-border hover:border-secondary text-secondary hover:text-white px-4 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all"
+                          className="bg-black border-2 border-border text-secondary hover:text-white px-4 py-3 text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 transition-all hover:border-white hover:brutalist-shadow-white"
                         >
                           <ExternalLink size={14} /> View Receipt
                         </a>
@@ -235,7 +235,7 @@ export default function AccountPage() {
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-lg bg-card border border-border p-8 rounded-3xl shadow-2xl"
+              className="relative w-full max-w-lg bg-black border-4 border-white brutalist-shadow-white p-8"
             >
               <button 
                 onClick={() => setCompletingPayment(null)}
@@ -249,7 +249,7 @@ export default function AccountPage() {
                 <p className="text-secondary text-xs uppercase tracking-widest">Upload receipt for remaining 50%</p>
               </div>
 
-              <div className="bg-primary/5 p-4 rounded-2xl border border-primary/20 mb-8 text-center">
+              <div className="bg-black p-4 border-2 border-primary mb-8 text-center brutalist-shadow-sm">
                 <p className="text-xs text-primary font-bold uppercase tracking-widest mb-1">Due Amount</p>
                 <p className="text-3xl font-mono font-bold text-white">EGP {(completingPayment.total_amount * 0.5).toFixed(0)}</p>
               </div>
@@ -265,7 +265,7 @@ export default function AccountPage() {
                   />
                   <label
                     htmlFor="final-receipt-upload"
-                    className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-border rounded-2xl cursor-pointer hover:border-primary transition-all text-secondary"
+                    className="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-border cursor-pointer hover:border-white hover:bg-white/5 transition-all text-secondary overflow-hidden"
                   >
                     {file ? (
                       <div className="flex flex-col items-center p-4">
@@ -284,7 +284,7 @@ export default function AccountPage() {
                 <button
                   disabled={uploading || !file}
                   type="submit"
-                  className="w-full py-4 bg-primary text-black font-heading font-bold uppercase tracking-widest text-sm rounded-2xl hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-xl disabled:opacity-50"
+                  className="w-full py-4 bg-primary text-black font-heading font-bold uppercase tracking-widest text-sm border-2 border-primary brutalist-shadow hover:brutalist-shadow-hover hover:bg-white hover:border-white transition-all flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   {uploading ? "Uploading..." : (
                     <>
