@@ -64,8 +64,14 @@ export default function CheckoutPage() {
 
   const total = totalPrice();
   
-  // Apply 15% discount if promo code ENACTUS2026 is used
-  const discountValue = discountApplied ? Math.round(total * 0.15) : 0;
+  // Apply promo code: -80 per crewneck, -85 per zip hoodie (displayed as "15% off")
+  const discountValue = discountApplied
+    ? items.reduce((sum, item) => {
+        if (item.slug === "enactus-cairo-crewneck") return sum + 80 * item.quantity;
+        if (item.slug === "enactus-cairo-zip-hoodie") return sum + 85 * item.quantity;
+        return sum;
+      }, 0)
+    : 0;
   const discountedTotal = Math.max(0, total - discountValue);
   
   const discountAmount = paymentType === "Deposit" ? discountedTotal * 0.5 : discountedTotal;
