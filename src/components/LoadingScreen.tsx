@@ -64,9 +64,12 @@ export default function LoadingScreen() {
       ref={overlayRef}
       className="fixed inset-0 z-[9999] bg-[#0a0a0a] flex flex-col items-center justify-center"
     >
-      <h1 className="font-heading text-4xl md:text-6xl font-bold tracking-[0.2em] text-white uppercase mb-4">
+      <h1 className="font-heading text-4xl md:text-6xl font-bold tracking-[0.2em] text-white uppercase mb-2">
         ENACTUS CAIRO
       </h1>
+      <p className="font-heading text-lg md:text-xl font-bold text-primary uppercase tracking-[0.15em] mb-4">
+        20 Years of Impact
+      </p>
       <p className="font-mono text-xs text-secondary tracking-widest mb-8">
         Loading...
       </p>
