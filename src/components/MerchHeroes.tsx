@@ -10,7 +10,7 @@ gsap.registerPlugin(ScrollTrigger);
 const heroes = [
   {
     name: "Basel Bahaa",
-    role: "Financial VP",
+    role: "Financial Vice President",
     image: "/heroes/basel.jpg",
   },
   {
@@ -20,7 +20,7 @@ const heroes = [
   },
   {
     name: "Eyad Ahmed",
-    role: "Branding VP",
+    role: "Branding Vice President",
     image: "/heroes/eyad.jpg",
   },
   {
@@ -35,7 +35,7 @@ const heroes = [
   },
   {
     name: "RM Team",
-    role: "Resource Management",
+    role: "Merch Warriors",
     image: "/heroes/rm-team.jpg",
   },
 ];
