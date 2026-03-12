@@ -33,6 +33,7 @@ export default function Navbar() {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "What We Do", href: "/#built-different" },
+    { label: "Merch Heroes", href: "/#merch-heroes" },
   ];
 
   return (
