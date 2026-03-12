@@ -13,7 +13,7 @@ export const products: Product[] = [
   {
     slug: "enactus-cairo-crewneck",
     name: "Enactus Cairo Crewneck",
-    price: 550,
+    price: 470,
     category: "Winter Collection",
     images: [
       "/products/crewneck-front.jpg",
@@ -27,7 +27,7 @@ export const products: Product[] = [
   {
     slug: "enactus-cairo-zip-hoodie",
     name: "Enactus Cairo Zip Hoodie",
-    price: 570,
+    price: 485,
     category: "Winter Collection",
     images: [
       "/products/zipup-front.jpg",
