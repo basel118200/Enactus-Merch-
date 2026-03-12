@@ -47,16 +47,27 @@ export default function ShopPage() {
           ))}
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filtered.map((product) => (
-            <ProductCard key={product.slug} product={product} />
-          ))}
-        </div>
+        {/* Product Grid or Coming Soon message */}
+        {activeCategory === "Summer Collection" ? (
+          <div className="py-32 flex flex-col items-center justify-center text-center">
+            <h2 className="font-heading text-3xl md:text-5xl font-bold uppercase tracking-widest text-primary mb-4">
+              Coming Soon
+            </h2>
+            <p className="text-secondary tracking-wider uppercase text-sm max-w-md">
+              The summer heat is on its way. Drop 2 is currently in production.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filtered.map((product) => (
+              <ProductCard key={product.slug} product={product} />
+            ))}
+          </div>
+        )}
 
-        {filtered.length === 0 && (
-          <p className="text-center text-secondary py-20 text-sm">
-            No products in this category yet.
+        {filtered.length === 0 && activeCategory !== "Summer Collection" && (
+          <p className="text-center text-secondary py-20 text-sm tracking-wider uppercase">
+            No products found.
           </p>
         )}
       </div>
