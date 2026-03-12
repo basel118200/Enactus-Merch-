@@ -64,8 +64,8 @@ export default function CheckoutPage() {
 
   const total = totalPrice();
   
-  // Apply 70 EGP discount if promo code ENACTUS2026 is used
-  const discountValue = discountApplied ? 70 : 0;
+  // Apply 15% discount if promo code ENACTUS2026 is used
+  const discountValue = discountApplied ? Math.round(total * 0.15) : 0;
   const discountedTotal = Math.max(0, total - discountValue);
   
   const discountAmount = paymentType === "Deposit" ? discountedTotal * 0.5 : discountedTotal;
@@ -256,7 +256,7 @@ export default function CheckoutPage() {
                     </button>
                   </div>
                   {promoError && <p className="text-red-500 text-[10px] uppercase font-bold mt-3 tracking-widest">{promoError}</p>}
-                  {discountApplied && <p className="text-green-500 text-[10px] uppercase font-bold mt-3 tracking-widest">Promo code ENACTUS2026 applied! (-70 EGP)</p>}
+                  {discountApplied && <p className="text-green-500 text-[10px] uppercase font-bold mt-3 tracking-widest">Promo code ENACTUS2026 applied! (15% off)</p>}
                 </div>
 
                 {/* QR Instructions */}
