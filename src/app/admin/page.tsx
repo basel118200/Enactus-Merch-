@@ -42,11 +42,15 @@ export default function AdminPage() {
         setIsAdmin(true); 
       }
       
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("orders")
         .select("*")
         .order("created_at", { ascending: false });
 
+      if (error) {
+        console.error("Error fetching orders:", error);
+      }
+      
       if (data) setOrders(data);
       setLoading(false);
     };
