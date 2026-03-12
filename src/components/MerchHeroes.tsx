@@ -92,10 +92,12 @@ export default function MerchHeroes() {
                   src={hero.image}
                   alt={hero.name}
                   fill
-                  className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105"
+                  className={`${
+                    hero.name === "RM Team" ? "object-contain" : "object-cover"
+                  } grayscale group-hover:grayscale-0 transition-all duration-500 group-hover:scale-105`}
                 />
                 {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
               </div>
               <div className="mt-4">
                 <h3 className="font-heading text-sm font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors">
