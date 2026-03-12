@@ -16,8 +16,8 @@ export const products: Product[] = [
     price: 550,
     category: "Winter Collection",
     images: [
-      "/products/crewneck-front.jpg",
-      "/products/crewneck-back.jpg",
+      "/products/crew-front.png",
+      "/products/crew-front2.png",
     ],
     sizes: ["S", "M", "L"],
     description:
