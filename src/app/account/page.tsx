@@ -100,6 +100,7 @@ export default function AccountPage() {
         .order("created_at", { ascending: false });
       if (updatedOrders) setOrders(updatedOrders);
     } catch (err: unknown) {
+      console.error("Payment completion error:", err);
       alert(err instanceof Error ? err.message : String(err));
     } finally {
       setUploading(false);
@@ -194,7 +195,7 @@ export default function AccountPage() {
                       </div>
                       
                       <div className="flex flex-col gap-3 w-full max-w-[200px]">
-                        {order.payment_type === 'Deposit' && order.payment_status !== 'Completed' && (
+                        {order.payment_type === 'Deposit' && (order.payment_status === 'Pending' || order.payment_status === 'Verified') && (
                           <button 
                             onClick={() => setCompletingPayment(order)}
                             className="bg-primary text-black px-4 py-3 text-[10px] font-bold uppercase tracking-widest flex items-center justify-center gap-2 border-2 border-primary brutalist-shadow-sm hover:brutalist-shadow-hover hover:bg-white hover:border-white transition-all duration-200"
